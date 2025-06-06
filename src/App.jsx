@@ -65,7 +65,6 @@ export default function App() {
 
   const handleAnswer = (letter) => {
     setSelectedAnswers({ ...selectedAnswers, [currentIndex]: letter });
-
     const currentQuestion = quizData[currentIndex];
     const correctAnswer = currentQuestion.Corretta;
 
@@ -74,6 +73,7 @@ export default function App() {
       localStorage.setItem('reviewList', JSON.stringify(updatedReviewList));
       setReviewList(updatedReviewList);
     }
+
     setSelectedAnswers({ ...selectedAnswers, [currentIndex]: letter });
   };
 
@@ -89,7 +89,7 @@ export default function App() {
   };
 
   if (!settings) {
-    return <StartScreen onStart={startQuiz} />;
+    return <StartScreen autoSaveWrong={autoSaveWrong} setAutoSaveWrong={setAutoSaveWrong} onStart={startQuiz} />;
   }
 
   if (showResults || currentIndex >= quizData.length) {
