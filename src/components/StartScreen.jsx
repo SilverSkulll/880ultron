@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function StartScreen({ onStart }) {
+export default function StartScreen({ onStart, autoSaveWrong, setAutoSaveWrong }) {
   const [mode, setMode] = useState('random');
   const [start, setStart] = useState(1);
   const [end, setEnd] = useState(10);
@@ -12,7 +12,7 @@ export default function StartScreen({ onStart }) {
   };
 
   return (
-    <div className="p-6 text-center max-w-xl mx-auto bg-white rounded shadow">
+    <div className="p-6 text-center max-w-xl mx-auto bg-white rounded shadow relative">
       <h2 className="text-2xl font-bold mb-4">Imposta il tuo quiz</h2>
 
       <div className="mb-4">
@@ -47,7 +47,10 @@ export default function StartScreen({ onStart }) {
         <div className="mb-4">
           <label className="block font-semibold mb-1">Numero di domande:</label>
           <select className="w-full p-2 border rounded" value={count} onChange={(e) => setCount(Number(e.target.value))}>
-            {[...Array(88)].map((_, i) => { const n = (i + 1) * 10; return (<option key={n} value={n}>{n}</option>); })}
+            {[...Array(88)].map((_, i) => {
+              const n = (i + 1) * 10;
+              return (<option key={n} value={n}>{n}</option>);
+            })}
           </select>
         </div>
       )}
@@ -61,6 +64,22 @@ export default function StartScreen({ onStart }) {
             </option>
           ))}
         </select>
+      </div>
+
+      <div className="mb-4 text-left">
+        <label className="flex items-center space-x-2">
+          <input
+            type="checkbox"
+            checked={autoSaveWrong}
+            onChange={(e) => setAutoSaveWrong(e.target.checked)}
+            className="w-5 h-5"
+          />
+          <span className={`text-sm font-semibold px-2 py-1 rounded ${
+            autoSaveWrong ? 'bg-green-600 text-white' : 'bg-red-600 text-white'
+          }`}>
+            {autoSaveWrong ? 'AUTO SALVATAGGIO ATTIVO' : 'AUTO SALVATAGGIO SPENTO'}
+          </span>
+        </label>
       </div>
 
       <button onClick={handleStart} className="mt-4 px-4 py-2 bg-green-600 text-white rounded">
