@@ -65,6 +65,16 @@ export default function App() {
 
   const handleAnswer = (letter) => {
     setSelectedAnswers({ ...selectedAnswers, [currentIndex]: letter });
+
+    const currentQuestion = quizData[currentIndex];
+    const correctAnswer = currentQuestion.Corretta;
+
+    if (autoSaveWrong && letter !== correctAnswer) {
+      const updatedReviewList = [...reviewList, parseInt(currentQuestion.Numero)];
+      localStorage.setItem('reviewList', JSON.stringify(updatedReviewList));
+      setReviewList(updatedReviewList);
+    }
+    setSelectedAnswers({ ...selectedAnswers, [currentIndex]: letter });
   };
 
   const toggleReview = (num) => {
