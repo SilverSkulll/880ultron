@@ -7,6 +7,7 @@ function shuffle(array) {
 }
 
 export default function App() {
+  const [autoSaveWrong, setAutoSaveWrong] = useState(false);
   const [quizData, setQuizData] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
