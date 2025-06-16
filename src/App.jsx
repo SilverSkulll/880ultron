@@ -7,7 +7,6 @@ function shuffle(array) {
 }
 
 export default function App() {
-  const [autoSaveWrong, setAutoSaveWrong] = useState(false);
   const [quizData, setQuizData] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -65,16 +64,6 @@ export default function App() {
 
   const handleAnswer = (letter) => {
     setSelectedAnswers({ ...selectedAnswers, [currentIndex]: letter });
-    const currentQuestion = quizData[currentIndex];
-    const correctAnswer = currentQuestion.Corretta;
-
-    if (autoSaveWrong && letter !== correctAnswer) {
-      const updatedReviewList = [...reviewList, parseInt(currentQuestion.Numero)];
-      localStorage.setItem('reviewList', JSON.stringify(updatedReviewList));
-      setReviewList(updatedReviewList);
-    }
-
-    setSelectedAnswers({ ...selectedAnswers, [currentIndex]: letter });
   };
 
   const toggleReview = (num) => {
@@ -89,7 +78,7 @@ export default function App() {
   };
 
   if (!settings) {
-    return <StartScreen autoSaveWrong={autoSaveWrong} setAutoSaveWrong={setAutoSaveWrong} onStart={startQuiz} />;
+    return <StartScreen onStart={startQuiz} />;
   }
 
   if (showResults || currentIndex >= quizData.length) {
